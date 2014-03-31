@@ -35,6 +35,7 @@
     <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ActivationLinkGenerator.cs" />
     <Compile Include="EmailService.cs" />
     <Compile Include="EmailValidator.cs" />
     <Compile Include="User.cs" />

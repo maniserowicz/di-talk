@@ -29,10 +29,7 @@ namespace Procent.DependencyInjection.app
             UsersDatabase.InsertUser(newUser);
 
             // generate activation link
-            string registrationLink = string.Format(
-                "http://myapp.com/confirm?email={0}&token={1}"
-                , newUser.Email, newUser.RegistrationToken
-            );
+            string registrationLink = new ActivationLinkGenerator().GenerateLink(newUser.RegistrationToken, newUser.Email);
 
             EmailService.RegistrationEmail(newUser.Email, registrationLink);
         }
