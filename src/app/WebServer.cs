@@ -2,22 +2,30 @@
 {
     public class WebServer
     {
-        public void RegisterUser(string email)
+        static PoorMansContainer _container;
+
+        static void Main()
         {
-            var container = new PoorMansContainer();
+            _container = new PoorMansContainer();
 
-            // register
-
-            container.Register<IEmailValidator, EmailValidator>();
-            container.Register<IActivationLinkGenerator, ActivationLinkGenerator>();
-            container.Register<IEmailService, EmailService>();
+            _container.Register<IEmailValidator, EmailValidator>();
+            _container.Register<IActivationLinkGenerator, ActivationLinkGenerator>();
+            _container.Register<IEmailService, EmailService>();
             // application compiles, but will throw in runtime
             // container.Register<IEmailTemplateGenerator, ???>();
 
-            container.RegisterType<UsersController>();
+            _container.RegisterType<UsersController>();
+        }
 
-            // resolve
-            var controller = container.Resolve<UsersController>();
+        static void Shutdown()
+        {
+            // our container does not implement this
+            // _container.Dispose();
+        }
+
+        public void RegisterUser(string email)
+        {
+            var controller = _container.Resolve<UsersController>();
 
             controller.RegisterUser(email);
         }
