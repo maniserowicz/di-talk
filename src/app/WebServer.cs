@@ -1,4 +1,6 @@
-﻿using System.Reflection;
+﻿using System.Data;
+using System.Data.SqlClient;
+using System.Reflection;
 using Autofac;
 
 namespace Procent.DependencyInjection.app
@@ -21,6 +23,15 @@ namespace Procent.DependencyInjection.app
                 .AsImplementedInterfaces()
                 .SingleInstance();
 
+            builder.Register(cc =>
+            {
+                var dbConnection = new SqlConnection();
+                dbConnection.BeginTransaction();
+                return dbConnection;
+            })
+            .As<IDbConnection>()
+            .InstancePerLifetimeScope();
+
             _container = builder.Build();
         }
 
@@ -31,9 +42,12 @@ namespace Procent.DependencyInjection.app
 
         public void RegisterUser(string email)
         {
-            var controller = _container.Resolve<UsersController>();
+            using (var scope = _container.BeginLifetimeScope())
+            {
+                var controller = scope.Resolve<UsersController>();
 
-            controller.RegisterUser(email);
+                controller.RegisterUser(email);
+            }
         }
     }
 }
