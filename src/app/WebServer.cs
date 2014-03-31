@@ -4,10 +4,21 @@
     {
         public void RegisterUser(string email)
         {
-            var emailValidator = new EmailValidator();
-            var activationLinkGenerator = new ActivationLinkGenerator();
-            var emailService = new EmailService(new IEmailTemplateGenerator());
-            var controller = new UsersController(emailValidator, activationLinkGenerator, emailService);
+            var container = new PoorMansContainer();
+
+            // register
+
+            container.Register<IEmailValidator, EmailValidator>();
+            container.Register<IActivationLinkGenerator, ActivationLinkGenerator>();
+            container.Register<IEmailService, EmailService>();
+            // application compiles, but will throw in runtime
+            // container.Register<IEmailTemplateGenerator, ???>();
+
+            container.RegisterType<UsersController>();
+
+            // resolve
+            var controller = container.Resolve<UsersController>();
+
             controller.RegisterUser(email);
         }
     }
