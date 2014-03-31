@@ -1,0 +1,39 @@
+#####################
+# NuGet packages
+#####################
+packages/
+
+
+#####################
+# Visual Studio
+#####################
+*.user
+*.suo
+*.sln.cache
+
+#####################
+# Build
+#####################
+bin/
+obj/
+
+#####################
+# nCrunch
+#####################
+*.crunch*.local.xml
+*.crunchsolution.cache
+*.ncrunchproject
+*.ncrunchsolution
+
+#####################
+# Resharper
+#####################
+*.resharper
+*\_ReSharper*
+*_ReSharper*
+
+#####################
+# Sublime Text
+#####################
+*.sublime-project
+*.sublime-workspace
