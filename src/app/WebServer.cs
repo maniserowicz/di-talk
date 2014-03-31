@@ -1,26 +1,32 @@
-﻿namespace Procent.DependencyInjection.app
+﻿using System.Reflection;
+using Autofac;
+
+namespace Procent.DependencyInjection.app
 {
     public class WebServer
     {
-        static PoorMansContainer _container;
+        static IContainer _container;
 
         static void Main()
         {
-            _container = new PoorMansContainer();
+            var builder = new ContainerBuilder();
+            Assembly executingAssembly = Assembly.GetExecutingAssembly();
 
-            _container.Register<IEmailValidator, EmailValidator>();
-            _container.Register<IActivationLinkGenerator, ActivationLinkGenerator>();
-            _container.Register<IEmailService, EmailService>();
-            // application compiles, but will throw in runtime
-            // container.Register<IEmailTemplateGenerator, ???>();
+            builder.RegisterAssemblyTypes(executingAssembly)
+                .AsSelf()
+                .AsImplementedInterfaces();
 
-            _container.RegisterType<UsersController>();
+            // override default registration if needed
+            builder.RegisterType<EmailValidator>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+
+            _container = builder.Build();
         }
 
         static void Shutdown()
         {
-            // our container does not implement this
-            // _container.Dispose();
+            _container.Dispose();
         }
 
         public void RegisterUser(string email)
