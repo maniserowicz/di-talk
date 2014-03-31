@@ -38,6 +38,7 @@
     <Compile Include="ActivationLinkGenerator.cs" />
     <Compile Include="EmailService.cs" />
     <Compile Include="EmailValidator.cs" />
+    <Compile Include="PoorMansContainer.cs" />
     <Compile Include="User.cs" />
     <Compile Include="UsersDatabase.cs" />
     <Compile Include="UsersController.cs" />
