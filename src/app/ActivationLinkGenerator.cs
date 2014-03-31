@@ -1,6 +1,11 @@
 ﻿namespace Procent.DependencyInjection.app
 {
-    public class ActivationLinkGenerator
+    public interface IActivationLinkGenerator
+    {
+        string GenerateLink(string token, string email);
+    }
+
+    public class ActivationLinkGenerator : IActivationLinkGenerator
     {
         public string GenerateLink(string token, string email)
         {
