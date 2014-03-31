@@ -16,8 +16,9 @@ namespace Procent.DependencyInjection.Tests
             _emailValidator = Substitute.For<IEmailValidator>();
             var linkGenerator = Substitute.For<IActivationLinkGenerator>();
             var emailService = Substitute.For<IEmailService>();
+            var usersDatabase = Substitute.For<IUsersDatabase>();
 
-            _controller = new UsersController(_emailValidator, linkGenerator, emailService);
+            _controller = new UsersController(_emailValidator, linkGenerator, emailService, usersDatabase);
 
             _email = "email";
         }

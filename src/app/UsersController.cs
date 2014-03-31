@@ -7,12 +7,14 @@ namespace Procent.DependencyInjection.app
         private readonly IEmailValidator _emailValidator;
         private readonly IActivationLinkGenerator _activationLinkGenerator;
         private readonly IEmailService _emailService;
+        private readonly IUsersDatabase _usersDatabase;
 
-        public UsersController(IEmailValidator emailValidator, IActivationLinkGenerator activationLinkGenerator, IEmailService emailService)
+        public UsersController(IEmailValidator emailValidator, IActivationLinkGenerator activationLinkGenerator, IEmailService emailService, IUsersDatabase usersDatabase)
         {
             _emailValidator = emailValidator;
             _activationLinkGenerator = activationLinkGenerator;
             _emailService = emailService;
+            _usersDatabase = usersDatabase;
         }
 
         public void RegisterUser(string email)
@@ -24,7 +26,7 @@ namespace Procent.DependencyInjection.app
             }
 
             // check if email is not taken
-            if (UsersDatabase.IsEmailTaken(email))
+            if (_usersDatabase.IsEmailTaken(email))
             {
                 throw new InvalidOperationException("Email already taken");
             }
@@ -37,7 +39,7 @@ namespace Procent.DependencyInjection.app
             };
 
             // insert user
-            UsersDatabase.InsertUser(newUser);
+            _usersDatabase.InsertUser(newUser);
 
             // generate activation link
             string registrationLink = _activationLinkGenerator.GenerateLink(newUser.RegistrationToken, newUser.Email);
