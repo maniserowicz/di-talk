@@ -1,16 +1,13 @@
 ﻿using System;
-using System.Text.RegularExpressions;
 
 namespace Procent.DependencyInjection.app
 {
     public class UsersController
     {
-        const string EMAIL_REGEX = @"[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}";
-
         public void RegisterUser(string email)
         {
             // check if email is valid
-            if (Regex.IsMatch(email, EMAIL_REGEX) == false)
+            if (new EmailValidator().Validate(email) == false)
             {
                 throw new ArgumentException("Invalid email address");
             }

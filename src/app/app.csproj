@@ -36,6 +36,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="EmailService.cs" />
+    <Compile Include="EmailValidator.cs" />
     <Compile Include="User.cs" />
     <Compile Include="UsersDatabase.cs" />
     <Compile Include="UsersController.cs" />
