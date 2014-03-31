@@ -23,10 +23,18 @@ namespace Procent.DependencyInjection.app
                 .AsImplementedInterfaces()
                 .SingleInstance();
 
+            builder.RegisterType<OperationContext>()
+                .AsSelf()
+                .InstancePerLifetimeScope();
+
             builder.Register(cc =>
             {
                 var dbConnection = new SqlConnection();
-                dbConnection.BeginTransaction();
+                var transaction = dbConnection.BeginTransaction();
+
+                var ctx = cc.Resolve<OperationContext>();
+                ctx.Transaction = transaction;
+
                 return dbConnection;
             })
             .As<IDbConnection>()
