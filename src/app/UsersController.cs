@@ -6,11 +6,13 @@ namespace Procent.DependencyInjection.app
     {
         private readonly IEmailValidator _emailValidator;
         private readonly IActivationLinkGenerator _activationLinkGenerator;
+        private readonly IEmailService _emailService;
 
-        public UsersController(IEmailValidator emailValidator, IActivationLinkGenerator activationLinkGenerator)
+        public UsersController(IEmailValidator emailValidator, IActivationLinkGenerator activationLinkGenerator, IEmailService emailService)
         {
             _emailValidator = emailValidator;
             _activationLinkGenerator = activationLinkGenerator;
+            _emailService = emailService;
         }
 
         public void RegisterUser(string email)
@@ -40,7 +42,7 @@ namespace Procent.DependencyInjection.app
             // generate activation link
             string registrationLink = _activationLinkGenerator.GenerateLink(newUser.RegistrationToken, newUser.Email);
 
-            EmailService.RegistrationEmail(newUser.Email, registrationLink);
+            _emailService.RegistrationEmail(newUser.Email, registrationLink);
         }
     }
 }

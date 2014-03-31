@@ -6,7 +6,8 @@
         {
             var emailValidator = new EmailValidator();
             var activationLinkGenerator = new ActivationLinkGenerator();
-            var controller = new UsersController(emailValidator, activationLinkGenerator);
+            var emailService = new EmailService(new IEmailTemplateGenerator());
+            var controller = new UsersController(emailValidator, activationLinkGenerator, emailService);
             controller.RegisterUser(email);
         }
     }
