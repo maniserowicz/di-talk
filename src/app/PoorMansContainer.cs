@@ -48,7 +48,7 @@ namespace Procent.DependencyInjection.app
                 .Select(x => Resolve(x.ParameterType))
                 .ToArray();
 
-            return Activator.CreateInstance(t, ctorParams);
+            return Activator.CreateInstance(implementationType, ctorParams);
         }
     }
 

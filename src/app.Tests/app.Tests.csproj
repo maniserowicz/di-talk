@@ -50,6 +50,7 @@
   <ItemGroup>
     <Compile Include="ActivationLinkGeneratorTests.cs" />
     <Compile Include="EmailValidatorTests.cs" />
+    <Compile Include="PoorMansContainerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserController_RegisterUser_Tests.cs" />
   </ItemGroup>
